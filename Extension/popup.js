@@ -20,10 +20,10 @@ function searchJobs() {
 
       items.forEach((item) => {
         const div = document.createElement("div");
-        div.className = "result-item";
+        div.className = "result-item mb-4";
         div.innerHTML = `
           <a href="${item.link}" target="_blank">${item.title}</a>
-          <p>${item.snippet}</p>
+          <p>${item.snippet}</p> <b></b>
         `;
         resultsDiv.appendChild(div);
       });
