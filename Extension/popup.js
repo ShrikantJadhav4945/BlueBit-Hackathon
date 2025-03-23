@@ -1,7 +1,6 @@
 // Constants
 const API_KEY = 'AIzaSyBD85a-q01Ml3x1Ov3NcT_c70lM5oFCWmg';
-const CX = 'b517a1021b95f4a54';
-
+const CX = 'b517a1021b95f4a54'
 // Store current view state
 let currentView = 'search';
 let searchResults = [];
@@ -34,13 +33,11 @@ function loadSavedJobs() {
   if (chrome.storage && chrome.storage.local) {
     chrome.storage.local.get(['savedJobs'], (result) => {
       savedJobs = result.savedJobs || [];
-      updateSavedBadge();
     });
   } else {
     // Fallback to localStorage for testing outside Chrome
     const savedJobsStr = localStorage.getItem('savedJobs');
     savedJobs = savedJobsStr ? JSON.parse(savedJobsStr) : [];
-    updateSavedBadge();
   }
 }
 
@@ -51,19 +48,6 @@ function saveSavedJobs() {
   } else {
     // Fallback to localStorage for testing outside Chrome
     localStorage.setItem('savedJobs', JSON.stringify(savedJobs));
-  }
-  updateSavedBadge();
-}
-
-// Update saved badge count
-function updateSavedBadge() {
-  const badge = document.getElementById("saved-badge");
-  badge.textContent = savedJobs.length;
-  
-  if (savedJobs.length > 0) {
-    badge.classList.add("show");
-  } else {
-    badge.classList.remove("show");
   }
 }
 
@@ -98,16 +82,12 @@ function showSearchView() {
   document.getElementById("saved-tab").classList.remove("active");
   
   const resultsDiv = document.getElementById("results");
-  const searchContainer = document.getElementById("search-container");
   
   // Fade out current content
   animateElementFade(resultsDiv, 'out');
   
-  // After fade out, show search container and update content
+  // After fade out, update content
   setTimeout(() => {
-    searchContainer.style.display = "block";
-    animateElementFade(searchContainer, 'in');
-    
     // Display last search results if available
     if (searchResults.length > 0) {
       displaySearchResults(searchResults);
@@ -126,15 +106,12 @@ function showSavedJobsView() {
   document.getElementById("search-tab").classList.remove("active");
   
   const resultsDiv = document.getElementById("results");
-  const searchContainer = document.getElementById("search-container");
   
   // Fade out current content
   animateElementFade(resultsDiv, 'out');
-  animateElementFade(searchContainer, 'out');
   
-  // After fade out, hide search container and update content
+  // After fade out, update content
   setTimeout(() => {
-    searchContainer.style.display = "none";
     displaySavedJobs();
   }, 300);
 }
@@ -148,11 +125,11 @@ function displayEmptyState(type) {
   let icon = "";
   
   if (type === "search") {
-    message = "Search for jobs to see results";
+    message = "Search for jobs to get started";
     icon = "🔍";
   } else if (type === "saved") {
     message = "No saved jobs yet.<br>Save jobs to access them later.";
-    icon = "📌";
+    icon = "🔖";
   } else if (type === "no-results") {
     message = "No jobs found matching your search.<br>Try different keywords.";
     icon = "🔍";
@@ -198,7 +175,7 @@ function displaySavedJobs() {
       <a href="${job.link}" target="_blank">${job.title}</a>
       <p>${job.snippet}</p>
       <button class="save-btn saved" data-index="${index}">
-        <span class="save-icon">📌</span>
+        <span class="save-icon">🔖</span>
         <span class="save-icon-saved">✓</span>
         Saved
       </button>
@@ -209,7 +186,7 @@ function displaySavedJobs() {
   // Add event listeners to remove buttons
   document.querySelectorAll(".save-btn.saved").forEach(button => {
     button.addEventListener("click", (e) => {
-      const index = parseInt(e.target.getAttribute("data-index"));
+      const index = parseInt(e.currentTarget.getAttribute("data-index"));
       removeSavedJob(index);
     });
   });
@@ -294,7 +271,7 @@ function displaySearchResults(items) {
       <a href="${job.link}" target="_blank">${job.title}</a>
       <p>${job.snippet}</p>
       <button class="save-btn ${isJobSaved ? 'saved' : ''}" data-index="${index}">
-        <span class="save-icon">📌</span>
+        <span class="save-icon">🔖</span>
         <span class="save-icon-saved">✓</span>
         ${isJobSaved ? 'Saved' : 'Save'}
       </button>
@@ -311,7 +288,7 @@ function displaySearchResults(items) {
   // Add event listeners to save buttons
   document.querySelectorAll(".save-btn").forEach(button => {
     button.addEventListener("click", (e) => {
-      const target = e.currentTarget; // Use currentTarget instead of target
+      const target = e.currentTarget;
       const index = parseInt(target.getAttribute("data-index"));
       const job = {
         title: items[index].title,
@@ -327,7 +304,7 @@ function displaySearchResults(items) {
           saveSavedJobs();
           target.classList.remove('saved');
           target.innerHTML = `
-            <span class="save-icon">📌</span>
+            <span class="save-icon">🔖</span>
             <span class="save-icon-saved">✓</span>
             Save
           `;
@@ -337,7 +314,7 @@ function displaySearchResults(items) {
         saveJob(job);
         target.classList.add('saved');
         target.innerHTML = `
-          <span class="save-icon">📌</span>
+          <span class="save-icon">🔖</span>
           <span class="save-icon-saved">✓</span>
           Saved
         `;
