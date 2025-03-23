@@ -1,28 +1,30 @@
 body {
-    font-family: "Inter", sans-serif;
-  }
-  .job-card:hover {
-    transform: translateY(-2px);
-  }
-  .loader {
-    border-top-color: #3b82f6;
-    -webkit-animation: spinner 1.5s linear infinite;
-    animation: spinner 1.5s linear infinite;
-  }
-  @-webkit-keyframes spinner {
-    0% {
-      -webkit-transform: rotate(0deg);
-    }
-    100% {
-      -webkit-transform: rotate(360deg);
-    }
-  }
-  @keyframes spinner {
-    0% {
+  font-family: "Inter", sans-serif;
+  background-color: #f9fafb;
+}
+.job-card {
+  border: 1px solid #e5e7eb;
+  transition: transform 0.2s ease-in-out;
+}
+.job-card:hover {
+  transform: translateY(-2px);
+}
+.loader {
+  width: 48px;
+  height: 48px;
+  border-width: 4px;
+  border-top-color: #3b82f6;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-radius: 50%;
+  animation: spinner 1s linear infinite;
+}
+@keyframes spinner {
+  0% {
       transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
   }
-  
+  100% {
+      transform: rotate(360deg);
+  }
+}
